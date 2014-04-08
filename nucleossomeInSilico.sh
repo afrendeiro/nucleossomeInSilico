@@ -11,5 +11,8 @@ sh ./gcContent/gcContent.sh
 # Compute GC content in features of interest (TSS, TES)
 sh ./nucleossomeEnrichment/nucleossomeCoverage.sh
 
+# Extract information about genes in operons
+Rscript ./operons/splitOperons.R
+
 # Plot
 R ./plot/plotCoverage.R
