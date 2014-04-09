@@ -12,9 +12,11 @@ done
 
 NUCLEOSSOME=~/data/oikopleura/nucleossome/bound.bed
 
+BASEDIR=~/data/oikopleura/nucleossome
+
 for FEATURE in TSS TES
 do
-    OUTDIR=/home/s3/afr/data/oikopleura/nucleossome/$FEATURE
+    OUTDIR=$BASEDIR/$FEATURE
     mkdir -p $OUTDIR
 
     cd ~/data/oikopleura/windows/$FEATURE
@@ -31,5 +33,5 @@ done
 ### Concatenate window values
 for FEATURE in TSS TES
 do
-    Rscript concatenateCoverage.R ~/data/oikopleura/nucleossome/$FEATURE ~/data/oikopleura/nucleossome/nucleossome.${FEATURE}_coverage.Rdata
+    Rscript concatenateCoverage.R $BASEDIR/$FEATURE $BASEDIR/nucleossome.${FEATURE}_coverage.Rdata
 done

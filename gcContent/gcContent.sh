@@ -10,11 +10,13 @@ done
 
 ### Compute GC content in windows around features of interest
 
+BASEDIR=~/data/oikopleura/gcContent
+
 GENOME=~/data/oikopleura/assembly/Oikopleura_reference_masked_v3.0.fa
 
 for FEATURE in TSS TES
 do
-    OUTDIR=/home/s3/afr/data/oikopleura/gcContent/$FEATURE
+    OUTDIR=$BASEDIR/$FEATURE
     mkdir -p $OUTDIR
 
     cd /home/s3/afr/data/oikopleura/windows/$FEATURE
@@ -33,5 +35,5 @@ done
 ### Concatenate window values
 for FEATURE in TSS TES
 do
-    Rscript concatenateCoverageMean.R ~/data/oikopleura/gcContent/$FEATURE ~/data/oikopleura/gcContent/gcContent.${FEATURE}_coverage.mean.Rdata
+    Rscript concatenateCoverageMean.R $BASEDIR/$FEATURE $BASEDIR/gcContent.${FEATURE}_coverage.mean.Rdata
 done

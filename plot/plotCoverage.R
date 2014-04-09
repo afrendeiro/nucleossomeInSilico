@@ -1,7 +1,9 @@
+nucleossomeDir = "/data/oikopleura/nucleossome/"
+
 # read nuc pos info
-load("~/data/oikopleura/nucleossome/nucleossome.TSS_coverage.Rdata")
+load(paste(nucleossomeDir, "nucleossome.TSS_coverage.Rdata", sep="")
 NucleossomesonTSS = concate
-load("~/data/oikopleura/nucleossome/nucleossome.TES_coverage.Rdata")
+load(paste(nucleossomeDir, "nucleossome.TES_coverage.Rdata", sep="")
 NucleossomesonTES = concate
 
 # Build dataframes with 'factors'
@@ -20,10 +22,11 @@ nucleoTES <- data.frame(
 	sub = "All"
 )
 
+gcDir = "/data/oikopleura/nucleossome/"
 # read GC content info
-load("~/data/oikopleura/gcContent/gcContent.TSS_coverage.mean.Rdata")
+load(paste(gcDir, "gcContent.TSS_coverage.mean.Rdata"),sep="")
 gcContentTSSs = concateMean
-load("~/data/oikopleura/gcContent/gcContent.TES_coverage.mean.Rdata")
+load(paste(gcDir, "gcContent.TES_coverage.mean.Rdata"),sep="")
 gcContentTESs = concateMean
 
 gcTSS <- data.frame(
@@ -43,7 +46,8 @@ gcTES <- data.frame(
 
 #### TRANSPLICED GENES
 # read SL gene list
-SL<-read.delim("~/data/oikopleura/trans-splicing/SL_AG_genes+IDs.bed",header=F)
+SLgenes <- "~/data/oikopleura/trans-splicing/"
+SL<-read.delim(paste(SLgenes, "SL_AG_genes+IDs.bed",sep=""), header=F)
 SLgenes<-unique(SL$V5)
 SL_nuc_TSS <- NucleossomesonTSS[which(NucleossomesonTSS$gene %in% SLgenes), ]
 SL_nuc_TES <- NucleossomesonTES[which(NucleossomesonTES$gene %in% SLgenes), ]
@@ -78,8 +82,8 @@ SLgcTES <- data.frame(
 	sub = "SL"
 )
 #### Operons
-
-load("~/data/oikopleura/annotation/operon_gene_position.split.Rdata")
+op <- "~/data/oikopleura/annotation/"
+load(paste(op, "operon_gene_position.split.Rdata"), sep="")
 # this is called splitOperons
 
 # grab all genes in operons
@@ -92,7 +96,7 @@ OP1_nuc_TSS <- NucleossomesonTSS[which(NucleossomesonTSS$gene %in% OP1$gene), ]
 OP1_nuc_TES <- NucleossomesonTES[which(NucleossomesonTES$gene %in% OP1$gene), ]
 
 # grab genes that are in position 2 or MORE of operon
-OP2m = splitOperons[splitOperons$OperonPosition >= 2, ]
+OP2m = splitOperons[splitOperons$OperonPosition >= 2 & splitOperons$OperonPosition < splitOperons$OperonLength, ]
 OP2m_nuc_TSS <- NucleossomesonTSS[which(NucleossomesonTSS$gene %in% OP2m$gene), ]
 OP2m_nuc_TES <- NucleossomesonTES[which(NucleossomesonTES$gene %in% OP2m$gene), ]
 
